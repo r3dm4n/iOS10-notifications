@@ -25,7 +25,7 @@
                                 <rect key="frame" x="84" y="318" width="207" height="30"/>
                                 <state key="normal" title="Send notification in 5 seconds"/>
                                 <connections>
-                                    <action selector="notifyMeButtonTappedWithSender:" destination="BYZ-38-t0r" eventType="touchDragInside" id="0g3-RD-Mlh"/>
+                                    <action selector="notifyMeButtonTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eCI-nl-dEH"/>
                                 </connections>
                             </button>
                         </subviews>

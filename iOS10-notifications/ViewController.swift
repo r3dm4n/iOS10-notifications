@@ -22,7 +22,6 @@ class ViewController: UIViewController {
             } else {
                 print(error?.localizedDescription as Any)
             }
-
         })
     }
 
@@ -38,25 +37,38 @@ class ViewController: UIViewController {
     }
 
 // 2. CREATE NOTIFICATION
-func scheduleNotification(inSeconds: TimeInterval, completion: @escaping (_ Success: Bool) -> ()) {
-    let notif = UNMutableNotificationContent()
-    notif.title = "New Notification"
-    notif.subtitle = "These are great"
-    notif.body = "The new notification options in iOS10 are great!"
-
-    let notifTrigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
-
-    let request = UNNotificationRequest(identifier: "myNotification", content: notif, trigger: notifTrigger)
-
-    UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-        if error != nil {
-            print(error)
+    func scheduleNotification(inSeconds: TimeInterval, completion: @escaping (_ Success: Bool) -> ()) {
+        //Attachment
+        let myImage = "rick_grimes"
+        guard let imageUrl = Bundle.main.url(forResource: myImage, withExtension: "gif") else {
             completion(false)
-        } else {
-            completion(true)
+            return
         }
-    })
 
-}
+        var attachment: UNNotificationAttachment
+
+        attachment = try! UNNotificationAttachment(identifier: "myNotification", url: imageUrl, options: .none)
+
+        //Create notification content
+        let notif = UNMutableNotificationContent()
+        notif.title = "New Notification"
+        notif.subtitle = "These are great"
+        notif.body = "The new notification options in iOS10 are great!"
+        notif.attachments = [attachment]
+
+        let notifTrigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
+
+        let request = UNNotificationRequest(identifier: "myNotification", content: notif, trigger: notifTrigger)
+
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+            if error != nil {
+                print(error!)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        })
+
+    }
 }
 
